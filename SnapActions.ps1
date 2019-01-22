@@ -1,4 +1,4 @@
-﻿#==============================================================
+#==============================================================
 # SCRIPT INFO
 #
 # Enables enduser to Create/Restore/Delete VM snapshots
@@ -17,6 +17,15 @@
 # To increase security, place SnapActions.ps1 in a directory
 # with limited access and only grant read/execute permissions
 # to users
+#
+# PLEASE NOTE - this script has not been audited for any 
+# security vulnerabilities.
+# Please review and understand what it does, and how this 
+# may impact your environment.
+#
+# THIS CARRIES NO WARRANTY - EXPRESSED NOR IMPLIED
+# USE STRICTLY AT YOUR OWN RISK.
+#
 #=============================================================
 
 
@@ -38,7 +47,7 @@ param(
     $in_vmname = "invalid",
     $in_snap_name = "invalid",
     $rs_snap_name = "inalid",
-    $rm_snap_name ="invalid",
+    $rm_snap_name = "invalid",
     $user_action = "invalid"
     )
 
@@ -46,7 +55,7 @@ param(
     $NTNXSnapin = "NutanixCmdletsPSSnapin"
 
 # Set environment specific variables
-    $NTNXCluster = "192.168.1.30" # Divide multiple clusters with semicolon (;).
+    $NTNXCluster = "<NTNX_Cluster_IP>" # Divide multiple clusters with semicolon (;).
    
 # SCRIPT ------------------------
 # Convert variables to multi line
@@ -55,8 +64,8 @@ param(
 # Set admin credentials 
     #$secureString = "01000000d08c9ddf0115d1118c7a00c04fc297eb0100000031b0577a76789141bf05df195dd37d1c000000000200000000001066000000010000200000003dabb153749040c110ccc0bf04fce496d427a01f5fccd2eb823ecc6cf236ddf6000000000e800000000200002000000012f3e9b130b39145fab56a2fe7c9bb16023f5813f9ccee6f1a2602a1bffcbe3620000000e4f65f60e8c6acc96783cd81a062043e5ea7ce0e7ee97dca39a19b9efcf9f00a40000000683ee5dc9c83457c65fc41b43df4db778398c20f9fa889e5d073db2ad9de06777c6c401754e9056df940f264c3c70ad9ee17056a8ef93716806e303b02f3a3eb"
     #$secpasswd = ConvertTo-SecureString $secureString
-    $login =  "snapadmin@neslok.local"
-    $secpasswd = ConvertTo-SecureString "plo00olpeR!" -AsPLainText -Force
+    $login =  "<NTNX_Cluster_ADMIN_ID>"
+    $secpasswd = ConvertTo-SecureString "<admin_password>" -AsPLainText -Force
     $NTNXCredentials = New-Object System.Management.Automation.PSCredential ($login,$secpasswd)
     
 
@@ -315,7 +324,3 @@ Delete_Snap {DeleteSnap}
             Disconnect-NTNXCluster -Server $Cluster
         }
     }
-
-# Present results
- #   $Results | Format-Table
-# -------------------------------
